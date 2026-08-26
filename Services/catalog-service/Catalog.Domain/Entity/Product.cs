@@ -22,12 +22,17 @@ namespace Catalog.Domain.Entity
         public Product(string name, Money price, ProductDescription description, SKU sku, Guid categoryId)
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentNullException("product name cannot be empty");
+            Id = Guid.NewGuid();
             Name = name;
             Price = price;
             Description = description;
             Sku = sku;
             CategoryId = categoryId;
             CreateAt = DateTime.UtcNow;
+        }
+        public static Product Create(string name, Money price, ProductDescription description, SKU sku, Guid categoryId)
+        {
+            return new Product(name, price, description, sku, categoryId);
         }
         public void PriceUpdate(Money price)
         {
