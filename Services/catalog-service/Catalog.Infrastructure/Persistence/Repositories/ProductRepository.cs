@@ -45,8 +45,11 @@ namespace Catalog.Infrastructure.Persistence.Repositories
         public async Task RemoveAsync(Guid Id, CancellationToken cancellationToken = default)
         {
             var product = await FindByIdAsync(Id, cancellationToken);
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync(cancellationToken);
+            if(product != null)
+            {
+                _context.Products.Remove(product);
+                await _context.SaveChangesAsync(cancellationToken);
+            }
         }
 
         public async Task UpdateAsync(Product product, CancellationToken cancellationToken = default)
