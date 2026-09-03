@@ -23,7 +23,7 @@ namespace Catalog.Domain.Entity
             Name = name;
             CreateAt = DateTime.UtcNow;
         }
-        private static Category Create(Guid id, string name) { return new Category(id, name); }
+        public static Category Create(Guid id, string name) { return new Category(id, name); }
         public void Update(string name)
         {
 
