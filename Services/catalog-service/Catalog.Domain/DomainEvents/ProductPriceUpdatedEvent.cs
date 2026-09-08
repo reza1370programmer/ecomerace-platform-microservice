@@ -1,8 +1,10 @@
 ﻿
 
+using MediatR;
+
 namespace Catalog.Domain.DomainEvents
 {
-    public class ProductPriceUpdatedEvent
+    public class ProductPriceUpdatedEvent: INotification
     {
         public Guid ProductId { get; init; }
         public decimal OldPrice { get; init; }

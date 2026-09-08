@@ -1,8 +1,10 @@
 ﻿
 
+using MediatR;
+
 namespace Catalog.Domain.DomainEvents
 {
-    public class ProductCreatedEvent
+    public class ProductCreatedEvent:INotification
     {
         public Guid ProductId { get; init; }
         public string Name { get; init; } = string.Empty;
