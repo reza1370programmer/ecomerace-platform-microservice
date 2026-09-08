@@ -1,13 +1,11 @@
 ﻿
 
+using Catalog.Application.Interfaces;
 using MassTransit;
 
 namespace Catalog.Infrastructure.EventBus
 {
-    public interface IEventBusService
-    {
-        Task PublishAsync<T>(T message, CancellationToken cancellationToken = default) where T : class;
-    }
+    
     public class EventBusService : IEventBusService
     {
         public readonly IPublishEndpoint _publishEndpoint;
