@@ -1,4 +1,5 @@
 using Catalog.Application.Handler;
+using Catalog.Application.Interfaces;
 using Catalog.Domain.Repositories;
 using Catalog.Infrastructure.EventBus;
 using Catalog.Infrastructure.Persistence.EfCore;
