@@ -2,7 +2,7 @@
 
 namespace Messaging.Contracts
 {
-    public class ProductCreateIntegrationEvent
+    public record ProductCreateIntegrationEvent
     {
         public Guid Id { get; init; }
         public string Name { get; init; }
