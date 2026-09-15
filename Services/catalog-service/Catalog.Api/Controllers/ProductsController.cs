@@ -24,14 +24,14 @@ namespace Catalog.Api.Controllers
             var product = await _mediator.Send(new GetAllProductsQuery(), cancellationToken);
             return Ok(product);
         }
-        [HttpGet("{id:guid}")]
+        [HttpGet("id/{id:guid}")]
         public async Task<ActionResult<ProductDto>> GetProductById(Guid id, CancellationToken cancellationToken)
         {
             var product = await _mediator.Send(new GetProductByIdQuery(id), cancellationToken);
             if (product == null) return NotFound();
             return Ok(product);
         }
-        [HttpGet("{sku:string}")]
+        [HttpGet("sku/{sku}")]
         public async Task<ActionResult<ProductDto>> GetProductBySku(string Sku, CancellationToken cancellationToken)
         {
             var product = await _mediator.Send(new GetProductBySkuQuery(Sku));
@@ -39,7 +39,7 @@ namespace Catalog.Api.Controllers
                 return NotFound();
             return Ok(product);
         }
-        [HttpGet("{CategoryId:guid}")]
+        [HttpGet("categoryId/{CategoryId:guid}")]
         public async Task<ActionResult<ProductDto>> GetProductsByCategoryId(Guid CategoryId, CancellationToken cancellationToken)
         {
             var products = await _mediator.Send(new GetProductsByCategoryQuery(CategoryId), cancellationToken);
@@ -52,7 +52,7 @@ namespace Catalog.Api.Controllers
             var productid = await _mediator.Send(command);
             return productid;
         }
-        [HttpPut("{id:guid}/price")]
+        [HttpPut("price/{id:guid}")]
         [Authorize]
         public async Task<IActionResult> UpdateProductPrice(Guid id,UpdateProductPriceRequest request,CancellationToken cancellationToken)
         {

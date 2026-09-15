@@ -23,7 +23,7 @@ builder.Services.AddMassTransit(config =>
 {
     config.UsingRabbitMq((ctx, cfg) =>
     {
-        cfg.Host(builder.Configuration["RabbitMQ:Host"], "/", h =>
+        cfg.Host("localhost", "5672", h =>
         {
             h.Username(builder.Configuration["RabbitMQ:Username"]);
             h.Password(builder.Configuration["RabbitMQ:Password"]);
@@ -48,9 +48,9 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-using (var scope = app.Services.CreateScope())
-{
-    var dbcontext = scope.ServiceProvider.GetRequiredService<CatalogContext>();
-    await dbcontext.Database.MigrateAsync();
-}
+//using (var scope = app.Services.CreateScope())
+//{
+//    var dbcontext = scope.ServiceProvider.GetRequiredService<CatalogContext>();
+//    await dbcontext.Database.MigrateAsync();
+//}
 app.Run();

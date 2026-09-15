@@ -16,6 +16,7 @@ namespace Catalog.Api.Controllers
             _mediator = mediator;
         }
 
+        [HttpPost]
         public async Task<ActionResult<Guid>> CreateCategory([FromBody] CreateCategoryRequest request, CancellationToken cancellationToken)
         {
             var command = new CreateCategoryCommand(request.Name);
