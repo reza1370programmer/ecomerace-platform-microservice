@@ -32,9 +32,9 @@ namespace Catalog.Api.Controllers
             return Ok(product);
         }
         [HttpGet("sku/{sku}")]
-        public async Task<ActionResult<ProductDto>> GetProductBySku(string Sku, CancellationToken cancellationToken)
+        public async Task<ActionResult<ProductDto>> GetProductBySku(string sku, CancellationToken cancellationToken)
         {
-            var product = await _mediator.Send(new GetProductBySkuQuery(Sku));
+            var product = await _mediator.Send(new GetProductBySkuQuery(sku));
             if (product == null)
                 return NotFound();
             return Ok(product);
