@@ -1,19 +1,18 @@
-version:  '3.8'
-
 services:
   catalog-db:
     image: postgres:15-alpine
     container_name: catalog-db
     environment:
-      POSTGRES_DB: catalog-db
+      POSTGRES_DB: catalog_db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - 5432:5432
+      - "5432:5432"
     volumes:
       - catalog-db:/var/lib/postgresql/data
     networks:
       - ecommerce-network
+
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: rabbitmq
@@ -21,26 +20,44 @@ services:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
     ports:
-      - 5672:5672
-      - 15672:15672
+      - "5672:5672"
+      - "15672:15672"
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
     networks:
       - ecommerce-network
     healthcheck:
-      test: ["CMD","rabbitmq-diagnostics","ping"]
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
       interval: 10s
       timeout: 5s
-      
-    
-    
-    
-    
-    
+      retries: 5
+
+  catalog-api:
+    build:
+      context: .
+      dockerfile: Services/Catalog-service/Catalog.API/Dockerfile
+    container_name: catalog-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=catalog-db;Port=5432;Database=catalog_db;Username=postgres;Password=postgres
+      - RabbitMQ__Host=rabbitmq
+      - RabbitMQ__Username=guest
+      - RabbitMQ__Password=guest
+      - Jwt__Secret=YourSuperSecretKeyThatIsAtLeast32CharactersLong!
+      - Jwt__Issuer=ECommercePlatform
+      - Jwt__Audience=ECommercePlatform
+    ports:
+      - "5001:8080"
+    depends_on:
+      - catalog-db
+      - rabbitmq
+    networks:
+      - ecommerce-network
+
 volumes:
   catalog-db:
   rabbitmq_data:
-    
+
 networks:
   ecommerce-network:
     driver: bridge
