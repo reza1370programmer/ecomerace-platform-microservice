@@ -1,3 +1,4 @@
+using Identity.Api.services;
 using Identity.Applications.Commands;
 using Identity.Applications.Services;
 using Identity.Domain.Repositories;
@@ -28,7 +29,7 @@ builder.Services.AddScoped<IUserRespository, UserRespository>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddScoped<ITokenServices, TokenServices>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
-
+builder.Services.AddGrpc();
 var JwtSecret = builder.Configuration["Jwt:Secret"] ?? throw new InvalidOperationException("jwt secret mot configured!");
 var JwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "ECommercePlatform";
 var JwtAudience = builder.Configuration["Jwt:Audience"] ?? "ECommercePlatform";
@@ -68,7 +69,7 @@ if (app.Environment.IsDevelopment())
 }
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.MapGrpcService<UserServicer>();
 app.MapControllers();
 
 app.Run();

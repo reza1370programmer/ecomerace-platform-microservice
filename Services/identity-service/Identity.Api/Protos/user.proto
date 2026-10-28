@@ -1,0 +1,23 @@
+syntax = "proto3" ;
+
+option csharp_namespace = "Identity.Api.Protos";
+
+package  users;
+
+// the service definitions
+
+service UserProtoServic {
+  
+  rpc CheckUserExists(CheckUserExistsRequest) returns (CheckUserExistsResponse);
+}
+
+//request
+
+message CheckUserExistsRequest {
+  string user_id = 1 ;
+}
+//response
+
+message CheckUserExistsResponse{
+  bool  exists = 1 ;
+}

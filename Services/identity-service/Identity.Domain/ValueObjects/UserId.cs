@@ -6,7 +6,7 @@ namespace Identity.Domain.ValueObjects
     {
         public Guid Value { get; init; }
 
-        private UserId(Guid value)
+        public UserId(Guid value)
         {
             if (value == Guid.Empty)
             {
